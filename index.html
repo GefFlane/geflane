@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GefLane — Сайты под ключ</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f3ef;
+    --white: #ffffff;
+    --black: #0f0f0f;
+    --accent: #1a1a2e;
+    --green: #2d6a4f;
+    --green-light: #e8f5e9;
+    --gray: #6b6b6b;
+    --gray-light: #e8e5df;
+    --border: #ddd9d0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(245,243,239,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--green); }
+
+  nav ul {
+    display: flex; gap: 36px; list-style: none;
+  }
+
+  nav ul a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--black); }
+
+  .nav-cta {
+    background: var(--black);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--green) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 600px 500px at 80% 50%, rgba(45,106,79,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 400px at 10% 80%, rgba(26,26,46,0.05) 0%, transparent 70%);
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 760px;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(45,106,79,0.2);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 6vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    color: var(--black);
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--green);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--gray);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 44px;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--black);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--green); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--black);
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--black); }
+
+  .hero-stats {
+    position: absolute; right: 48px; bottom: 80px;
+    display: flex; gap: 48px;
+  }
+
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--black);
+  }
+  .stat-label { font-size: 13px; color: var(--gray); margin-top: 2px; }
+
+  /* SECTION BASE */
+  section { padding: 100px 48px; }
+
+  .section-tag {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--gray);
+    line-height: 1.6;
+    max-width: 480px;
+    margin-bottom: 56px;
+  }
+
+  /* SERVICES */
+  .services { background: var(--white); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--white);
+    padding: 40px 36px;
+    transition: background 0.2s;
+  }
+
+  .service-card:hover { background: var(--bg); }
+
+  .service-icon {
+    width: 44px; height: 44px;
+    background: var(--green-light);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .service-price {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--black);
+  }
+
+  .service-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  /* WORKS */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .work-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .work-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+
+  .work-preview {
+    height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .work-preview-1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+  .work-preview-2 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+  .work-preview-3 { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
+
+  .work-info { padding: 24px; }
+  .work-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .work-info h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .work-info p { font-size: 14px; color: var(--gray); line-height: 1.5; }
+
+  /* PROCESS */
+  .process { background: var(--white); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+
+  .process-step {
+    padding: 40px 32px;
+    position: relative;
+  }
+
+  .process-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -12px; top: 40px;
+    font-size: 20px;
+    color: var(--border);
+    z-index: 1;
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 48px;
+    color: var(--gray-light);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .process-step h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .process-step p { font-size: 14px; color: var(--gray); line-height: 1.5; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--black);
+    color: white;
+    text-align: center;
+    border-radius: 24px;
+    margin: 0 48px 80px;
+    padding: 80px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 600px 400px at 50% 100%, rgba(45,106,79,0.3) 0%, transparent 70%);
+  }
+
+  .cta-section * { position: relative; z-index: 1; }
+
+  .cta-section h2 {
+    color: white;
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    color: var(--black);
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-white:hover { background: var(--green); color: white; }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--green); }
+
+  footer p { font-size: 13px; color: var(--gray); }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    nav ul { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-stats { position: static; margin-top: 48px; justify-content: flex-start; }
+    section { padding: 60px 20px; }
+    .cta-section { margin: 0 20px 60px; padding: 60px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
+    .process-step::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Gef<span>Lane</span></a>
+  <ul>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#works">Работы</a></li>
+    <li><a href="#process">Процесс</a></li>
+    <li><a href="https://t.me/yourusername" class="nav-cta">Написать</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Принимаю заказы</div>
+    <h1>Сайты которые<br><em>работают</em><br>на вас</h1>
+    <p class="hero-sub">Делаю современные сайты под ключ — быстро, чисто, без лишнего. От лендинга до интернет-магазина.</p>
+    <div class="hero-actions">
+      <a href="https://t.me/yourusername" class="btn-primary">Обсудить проект →</a>
+      <a href="#works" class="btn-secondary">Посмотреть работы</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">7 дн</div>
+      <div class="stat-label">средний срок</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">довольных клиентов</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-tag">Услуги</div>
+  <h2>Что я делаю</h2>
+  <p class="section-sub">Весь цикл от дизайна до запуска. Вы получаете готовый сайт, я беру на себя всё остальное.</p>
+
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-icon">🎯</div>
+      <h3>Лендинг</h3>
+      <p>Одностраничный сайт для продукта, услуги или мероприятия. Быстро, убедительно, с конверсией.</p>
+      <div class="service-price">от 5 000 ₽ <span>/ 5-7 дней</span></div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">🏢</div>
+      <h3>Сайт компании</h3>
+      <p>Полноценный корпоративный сайт с несколькими страницами, формами и контентом.</p>
+      <div class="service-price">от 12 000 ₽ <span>/ 10-14 дней</span></div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">🛒</div>
+      <h3>Интернет-магазин</h3>
+      <p>Каталог товаров, корзина, оплата. Всё что нужно для продаж онлайн.</p>
+      <div class="service-price">от 20 000 ₽ <span>/ 14-21 день</span></div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">✏️</div>
+      <h3>Доработка сайта</h3>
+      <p>Правки, новые страницы, исправление ошибок на существующем сайте.</p>
+      <div class="service-price">от 1 500 ₽ <span>/ по задаче</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section id="works">
+  <div class="section-tag">Портфолио</div>
+  <h2>Примеры работ</h2>
+  <p class="section-sub">Каждый проект — под задачу клиента. Никаких шаблонов.</p>
+
+  <div class="works-grid">
+    <div class="work-card fade-in">
+      <div class="work-preview work-preview-1">🏋️</div>
+      <div class="work-info">
+        <div class="work-tag">Лендинг</div>
+        <h3>Фитнес-студия</h3>
+        <p>Сайт для небольшой студии с записью на занятия и расписанием.</p>
+      </div>
+    </div>
+    <div class="work-card fade-in">
+      <div class="work-preview work-preview-2">💼</div>
+      <div class="work-info">
+        <div class="work-tag">Корпоративный</div>
+        <h3>IT-компания</h3>
+        <p>Многостраничный сайт с описанием услуг и портфолио.</p>
+      </div>
+    </div>
+    <div class="work-card fade-in">
+      <div class="work-preview work-preview-3">🌸</div>
+      <div class="work-info">
+        <div class="work-tag">Интернет-магазин</div>
+        <h3>Цветочный магазин</h3>
+        <p>Каталог, оформление заказа и доставка по городу.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-tag">Как работаем</div>
+  <h2>Просто и понятно</h2>
+  <p class="section-sub">Никакой воды — только результат.</p>
+
+  <div class="process-steps">
+    <div class="process-step fade-in">
+      <div class="step-num">01</div>
+      <h3>Обсуждаем</h3>
+      <p>Пишете в Telegram, рассказываете задачу, я задаю вопросы.</p>
+    </div>
+    <div class="process-step fade-in">
+      <div class="step-num">02</div>
+      <h3>Договариваемся</h3>
+      <p>Фиксируем объём, срок и цену. Предоплата 50%.</p>
+    </div>
+    <div class="process-step fade-in">
+      <div class="step-num">03</div>
+      <h3>Делаю</h3>
+      <p>Разрабатываю сайт, показываю промежуточный результат.</p>
+    </div>
+    <div class="process-step fade-in">
+      <div class="step-num">04</div>
+      <h3>Сдаю</h3>
+      <p>Вносим правки, запускаем, передаю все файлы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Готовы начать?</h2>
+  <p>Напишите — обсудим ваш проект бесплатно</p>
+  <a href="https://t.me/yourusername" class="btn-white">Написать в Telegram →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Gef<span>Lane</span></a>
+  <p>© 2025 GefLane. Казань.</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
